@@ -10,10 +10,14 @@ namespace Notepad.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         private ObservableCollection<Explorer> _explorerCollection;
-
-        public ObservableCollection<Explorer> ExplorerCollectionProperties { get => _explorerCollection; set => this.RaiseAndSetIfChanged(ref _explorerCollection, value); }
-
         private int _currentIndex;
+        private bool _visibilityNotePad;
+        private bool _visibilityExplorer;
+        private bool _visibilitySaveButton;
+        private bool _visibilityOpenButton;
+        private string _outTextBox;
+        private string _outTextFolder;
+        private string _saveButtonText;
         public int CurrentIndexProperties { get => _currentIndex; set 
             {
                 this.RaiseAndSetIfChanged(ref _currentIndex, value);
@@ -37,44 +41,16 @@ namespace Notepad.ViewModels
                     }
                 }
             } }
-
-        private bool _visibilityNotePad;
-        public bool VisibilityNotePadProperties { get => _visibilityNotePad; set => this.RaiseAndSetIfChanged(ref _visibilityNotePad, value); }
-
-        private bool _visibilityExplorer;
-        public bool VisibilityExplorerProperties { get => _visibilityExplorer; set => this.RaiseAndSetIfChanged(ref _visibilityExplorer, value); }
-
-        private bool _visibilitySaveButton;
-        public bool VisibilitySaveButtonProperties { get => _visibilitySaveButton; set => this.RaiseAndSetIfChanged(ref _visibilitySaveButton, value); }
-
-        private bool _visibilityOpenButton;
-        public bool VisibilityOpenButtonProperties { get => _visibilityOpenButton; set => this.RaiseAndSetIfChanged(ref _visibilityOpenButton, value); }
-
-        private string _outTextBox;
-        public string OutTextBoxProperties { get => _outTextBox; set => this.RaiseAndSetIfChanged(ref _outTextBox, value); }
-
-        private string _outTextFolder;
-        public string OutTextFolderProperties { get => _outTextFolder; set { this.RaiseAndSetIfChanged(ref _outTextFolder, value); if (_outTextFolder != "") SaveButtonTextProperties = "Сохранить"; } }
-
-        private string _saveButtonText;
-        public string SaveButtonTextProperties { get => _saveButtonText; set => this.RaiseAndSetIfChanged(ref _saveButtonText, value); }
-
-        private string _path = Directory.GetCurrentDirectory();
-
         public MainWindowViewModel()
         {
             _visibilityNotePad = true;
             _visibilityExplorer = false;
             _visibilitySaveButton = false;
             _visibilityOpenButton = false;
-
             _outTextBox = string.Empty;
             _outTextFolder = string.Empty;
-
             _saveButtonText = "открыть";
-
             _explorerCollection = new ObservableCollection<Explorer>();
-
             FillCollection(_path);
         }
         public void ReturnBack()
@@ -85,7 +61,6 @@ namespace Notepad.ViewModels
             _visibilitySaveButton = false;
             _visibilityOpenButton = false;
         }
-
         public void OpenExplorer()
         {
             _outTextFolder = string.Empty;
@@ -94,7 +69,6 @@ namespace Notepad.ViewModels
             _visibilitySaveButton = false;
             _visibilityOpenButton = true;
         }
-
         public void SaveExplorer()
         {
             _outTextFolder = "";
@@ -104,13 +78,11 @@ namespace Notepad.ViewModels
             _visibilityOpenButton = false;
             _currentIndex = 0;
         }
-
         public void ClickButton()
         {
             if (VisibilityOpenButtonProperties) openButton_openRegime();
             else if (VisibilitySaveButtonProperties) openButton_saveRegime();
         }
-
         public void openButton_openRegime()
         {
             if (_explorerCollection[CurrentIndexProperties] is Directories)
@@ -138,7 +110,6 @@ namespace Notepad.ViewModels
                 ReturnBack();
             }
         }
-
         public void openButton_saveRegime()
         {
             if (_explorerCollection[CurrentIndexProperties] is Directories && OutTextFolderProperties == "")
@@ -170,7 +141,6 @@ namespace Notepad.ViewModels
                 ReturnBack();
             }
         }
-
         public void LoadFile(string tempPath)
         {
             string newText = String.Empty;
@@ -181,7 +151,6 @@ namespace Notepad.ViewModels
             }
             OutTextBoxProperties = newText;
         }
-
         public async void SaveFile(string tempPath, int flag)
         {
             if (flag == 0)
@@ -200,7 +169,6 @@ namespace Notepad.ViewModels
                 }
             }
         }
-
         public void FillCollection(string varPath)
         {
             _explorerCollection.Clear();
@@ -226,13 +194,53 @@ namespace Notepad.ViewModels
             }
             CurrentIndexProperties = 0;
         }
-
         public void DoubleTap()
         {
             if (VisibilityOpenButtonProperties) openButton_openRegime();
             else if (VisibilitySaveButtonProperties) openButton_saveRegime();
         }
-
+        public bool VisibilityNotePadProperties
+        {
+            get => _visibilityNotePad; 
+            set => this.RaiseAndSetIfChanged(ref _visibilityNotePad, value);
+        }
+        public bool VisibilityExplorerProperties
+        {
+            get => _visibilityExplorer; 
+            set => this.RaiseAndSetIfChanged(ref _visibilityExplorer, value);
+        }
+        public bool VisibilitySaveButtonProperties
+        {
+            get => _visibilitySaveButton; 
+            set => this.RaiseAndSetIfChanged(ref _visibilitySaveButton, value);
+        }
+        public bool VisibilityOpenButtonProperties
+        {
+            get => _visibilityOpenButton; 
+            set => this.RaiseAndSetIfChanged(ref _visibilityOpenButton, value);
+        }
+        public string OutTextBoxProperties
+        {
+            get => _outTextBox; 
+            set => this.RaiseAndSetIfChanged(ref _outTextBox, value);
+        }
+        public string OutTextFolderProperties 
+        {
+            get => _outTextFolder; 
+            set { this.RaiseAndSetIfChanged(ref _outTextFolder, value); 
+                if (_outTextFolder != "") SaveButtonTextProperties = "cохранить"; } 
+        }
+        public string SaveButtonTextProperties
+        {
+            get => _saveButtonText; 
+            set => this.RaiseAndSetIfChanged(ref _saveButtonText, value);
+        }
+        public ObservableCollection<Explorer> ExplorerCollectionProperties
+        {
+            get => _explorerCollection; 
+            set => this.RaiseAndSetIfChanged(ref _explorerCollection, value);
+        }
+        private string _path = Directory.GetCurrentDirectory();
     }
 }
 

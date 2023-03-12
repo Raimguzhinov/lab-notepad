@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Notepad.Views.FilesControl"
+             xmlns:loc="clr-namespace:Notepad.Models"
+             xmlns:conv="clr-namespace:Notepad.Converters"
+             xmlns:vm="clr-namespace:Notepad.ViewModels">
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+    <UserControl.Resources>
+        <conv:ImageConverter x:Key="imageConvert"/>
+    </UserControl.Resources>
+    <Grid>
+        <ListBox Name="fileListBox" SelectedIndex="{Binding CurrentIndexProperties}" DoubleTapped="DoubleTap" Items="{Binding ExplorerCollectionProperties, Mode=OneWay}" Width="400" Height="500">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type loc:Explorer}">
+                    <Grid ColumnDefinitions="30*, 70*">
+                        <Image Margin="0 0 100 0" Width="50" Height="50" Source="{Binding Image, Converter={StaticResource imageConvert}}"/>
+                        <TextBlock Padding="15" Grid.Column="1" TextAlignment="Left" Width="400" Height="50" Text="{Binding Header}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox Name="fileTextBox" Text="{Binding OutTextFolderProperties, Mode=TwoWay}" Width="400" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Name="okButton" Content="{Binding ButtonMode}" 
+                Command="{Binding ClickButton}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                Grid.Row="2" Grid.Column="0"/>
+        <Button Name="cancelButton" Content="отмена" 
+                Command="{Binding ReturnBack}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+    </Grid>
+</UserControl>
+
+

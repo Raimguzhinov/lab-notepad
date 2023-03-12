@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Notepad.Views.FilesControl"
-             xmlns:loc="clr-namespace:Notepad.Models"
+             xmlns:local="clr-namespace:Notepad.Models"
              xmlns:conv="clr-namespace:Notepad.Converters"
              xmlns:vm="clr-namespace:Notepad.ViewModels">
     <Design.DataContext>
@@ -25,7 +25,7 @@
                  DoubleTapped="DoubleTap" Width="400"
                  Items="{Binding ExplorerCollectionProperties, Mode=OneWay}">
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type loc:Explorer}">
+                <DataTemplate DataType="{x:Type local:Explorer}">
                     <Grid ColumnDefinitions="25*, 75*">
                         <Image Margin="0 0 50 0" Width="35" Height="35"
                                Source="{Binding Image, Converter={StaticResource imageConvert}}"/>

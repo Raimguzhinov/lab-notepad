@@ -18,13 +18,13 @@ public class Files : Explorer
     public Files(string name) : base(name)
     {
         SourceName = name;
-        Image = "Assets/iconFile.png";
+        Image = "Assets/img/file.png";
     }
 
     public Files(FileInfo fileName) : base(fileName.Name)
     {
         SourceName = fileName.FullName;
-        Image = "Assets/iconFile.png";
+        Image = "Assets/img/file.png";
     }
 }
 
@@ -33,12 +33,12 @@ public class Directories : Explorer
     public Directories(string name) : base(name)
     {
         SourceName = name;
-        Image = "Assets/iconFolder.png";
+        Image = "Assets/img/backfolder.png";
     }
 
     public Directories(DirectoryInfo directoryName) : base(directoryName.Name)
     {
         SourceName = directoryName.FullName;
-        Image = "Assets/iconFolder.png"; 
+        Image = "Assets/img/folder.png";
     }
 }
